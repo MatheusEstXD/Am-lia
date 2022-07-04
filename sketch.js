@@ -3,12 +3,12 @@ var player,playerimg,estrelai,estrela;
 var meteoritosGP,meteoro;
 var meteoro1,meteoro2,meteoro3,meteoro4;
 var velo = 3;
-var gameState = 1;
+var gameState = 0;
 var vida = 1;
 var estrelagp;
 var tzeGuerra,tzeGuerraIMG,dialogo,dialogoimg,socorro,socorro2;
 //0 = dialogo 1 == oto dialogo 2== jogando 3== fim de jogo(cutscene) 
-
+var esquecionegocodoloop = 0
 var bruh,seila
 var som1,beep,ost2,ost3,boom;
 
@@ -103,28 +103,28 @@ function draw() {
   
   if(vida == 1){ 
   velo+=0.02;
-  if(frameCount - bruh >= 3000){
+  if(frameCount - bruh >= 2500){
     gameState = 3
   }
     if(keyDown("A") && player.x >= 0){
-      player.x-= 4 + velo / 10;
+      player.x-= 4 + velo / 5;
       player.rotation-=15;
     }
     if(keyDown("D") && player.x <= width){
-      player.x+= 4 + velo/10;
+      player.x+= 4 + velo/5;
       player.rotation+= 15;
     }
     if (player.isTouching(meteoritosGP)){
-     // console.log("tocou");
-       // boom.play();
-        //boom.looping = false
-        //boom.setVolume(0.2)
+        boom.play()
         vida = 0;
   }
   inimigos();
   }else if(vida <1){
     estrelagp.setVelocityYEach(0);
-      stroke("White");
+    meteoritosGP.setVelocityYEach(0.5)
+    meteoritosGP.setLifeTimeEach(-1)
+      stroke("White")
+      player.y++
       fill("Red");
       textSize(20);
       textFont("Times New Roman");
@@ -170,6 +170,8 @@ function draw() {
       socorro2.visible = true
       dialogo.visible = true
       dialogo.depth =5
+      ost2.stop()
+    som1.stop()
       textSize(35);
     fill("Blue");
     text("Amélia",width / 2 - 375,height - 225);
@@ -185,8 +187,7 @@ function draw() {
       }
 
   }else if(gameState == 4){
-    ost2.stop()
-    som1.stop()
+    
     textSize(35);
     fill("Blue");
     text("Amélia",width / 2 - 375,height - 225);
